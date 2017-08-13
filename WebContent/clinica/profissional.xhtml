@@ -9,7 +9,7 @@
 	<ui:define name="conteudo">
 		<h:form id="formProfissional">
 			<p:panel style="height:100%">
-				<h:graphicImage library="imagens" name="orcamento.png"
+				<h:graphicImage library="imagens" name="usuario.png"
 					style="vertical-align: middle; width: 63px;" alt="profissionalIcon" />
 				<p:outputLabel value="Profissional"
 					style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
@@ -33,7 +33,6 @@
 
 					<p:column headerText="Nome Completo">
 						<h:outputText value="#{profissional.nome}">
-							<f:outputText type="text" />
 						</h:outputText>
 
 					</p:column>
@@ -68,7 +67,7 @@
 				<p:commandButton id="botaoAdicionarProfissional"
 					style="width: 100%;"
 					onclick="PF('dlgAdicionarProfissional').show();"
-					update=":formAdicionarRecurso" value="Adicionar profissional"
+					update=":formAdicionarProfissional" value="Adicionar profissional"
 					icon="fa fa-money" />
 
 			</p:panel>

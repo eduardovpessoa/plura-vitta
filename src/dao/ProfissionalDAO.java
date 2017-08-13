@@ -45,4 +45,12 @@ public class ProfissionalDAO {
 		return listaProfissional;
 	}
 
+	public void excluirProfissional(Profissional profissional) {
+		EntityManager em = conexao.getConexao();
+		em.getTransaction().begin();
+		em.remove(profissional);
+		em.getTransaction().commit();
+		em.close();
+	}
+
 }

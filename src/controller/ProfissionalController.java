@@ -54,7 +54,7 @@ public class ProfissionalController {
 
 	public void removerProfissional() {
 
-		daoProfissional.salvarProfissional(profissionalSelecionado);
+		daoProfissional.excluirProfissional(profissionalSelecionado);
 
 		listaProfissionais.clear();
 		listaProfissionais.addAll(daoProfissional.listarProfissionais());
