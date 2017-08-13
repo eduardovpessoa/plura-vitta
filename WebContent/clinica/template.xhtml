@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:insert name="metadata"/>
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=iso-8859-1" />
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+            <title>Plura Vitta</title>
+            <h:outputStylesheet library="css" name="default.css" />
+        </f:facet>
+    </h:head>
+    <h:body>
+
+        <div class="cabecalho">
+                <table class="cabecalho">
+                    <tr>
+                        <td class="logo"><a href='index.xhtml'><h:graphicImage library="imagens" name="banner.jpg" alt="Plura Vitta" /></a></td>                        
+                    </tr>
+                </table>
+            <div class="menu">
+                <ui:include src="menu.xhtml" />
+            </div>
+        </div>
+
+        <div class="fundo">
+            <div class="conteudo" style="height:100%">
+                <ui:insert name="conteudo" />
+            </div>
+        </div>
+
+
+        <div class="rodape">
+            <table>
+                <tr>
+                    <td class="empresa">
+                        <h:outputText value="Plura Vitta - Eduardo Viana Pessoa" /></td>
+                </tr>
+            </table>
+
+        </div>
+    </h:body>
+
+</html>
+
+

@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formProfissional">
+			<p:panel style="height:100%">
+				<h:graphicImage library="imagens" name="orcamento.png"
+					style="vertical-align: middle; width: 63px;" alt="profissionalIcon" />
+				<p:outputLabel value="Profissional"
+					style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
+				<br />
+
+				<p:separator />
+
+				<p:messages id="messages" showDetail="false" />
+
+
+				<p:dataTable var="profissional"
+					value="#{profissionalController.listaProfissionais}"
+					paginator="true" rowsPerPageTemplate="5,10,15">>
+					
+						<p:column headerText="Data">
+						<h:outputText value="#{profissional.dataCadastro}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Nome Completo">
+						<h:outputText value="#{profissional.nome}">
+							<f:outputText type="text" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Alterar">
+						<p:commandButton id="botaoAlterar"
+							update=":formAlterarProfissional"
+							onclick="PF('dlgAlterarProfissional').show();"
+							icon="fa fa-search">
+							<f:setPropertyActionListener value="#{profissional}"
+								target="#{profissionalController.profissionalSelecionado}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column headerText="Excluir">
+						<p:commandButton id="botaoExcluir"
+							action="#{profissionalController.removerProfissional}"
+							update="formProfissional" icon="fa fa-trash-o">
+
+							<p:confirm header="Confirmação"
+								message="Tem certeza que deseja remover?" icon="ui-icon-alert" />
+
+							<f:setPropertyActionListener value="#{profissional}"
+								target="#{profissionalController.profissionalSelecionado}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+				<br />
+
+				<p:commandButton id="botaoAdicionarProfissional"
+					style="width: 100%;"
+					onclick="PF('dlgAdicionarProfissional').show();"
+					update=":formAdicionarRecurso" value="Adicionar profissional"
+					icon="fa fa-money" />
+
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Adicionar profissional" resizable="false"
+			widgetVar="dlgAdicionarProfissional" modal="true" height="200"
+			width="420">
+
+			<h:graphicImage library="imagens" name="moeda.png"
+				style="vertical-align: middle; width: 63px; " alt="usuarioIcon" />
+			<p:outputLabel value="Profissional"
+				style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
+			<br />
+			<p:separator />
+
+			<h:form id="formAdicionarProfissional">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="nomeProfissional" value="Nome Completo:" />
+					<p:inputText id="nomeProfissional"
+						value="#{profissionalController.novoProfissional.nome}"
+						style="width:350px" symbolPosition="p" required="true"
+						validatorMessage="Por favor, insira o nome completo.">
+					</p:inputText>
+				</h:panelGrid>
+				<p:commandButton id="button" style="width: 350px;"
+					action="#{profissionalController.adicionarProfissional}"
+					value="Salvar profissional" update=":formProfissional"
+					oncomplete="PF('dlgAdicionarProfissional').hide();"
+					icon="fa fa-money" />
+			</h:form>
+
+		</p:dialog>
+		<p:dialog header="Alterar profissional" resizable="false"
+			widgetVar="dlgAlterarProfissional" modal="true" height="200"
+			width="420">
+
+			<h:graphicImage library="imagens" name="moeda.png"
+				style="vertical-align: middle; width: 63px; " alt="usuarioIcon" />
+			<p:outputLabel value="Profissional"
+				style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
+			<br />
+			<p:separator />
+
+			<h:form id="formAlterarProfissional">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="alterarNomeProfissional" value="Nome Completo:" />
+					<p:inputText id="alterarNomeProfissional"
+						value="#{profissionalController.profissionalSelecionado.nome}"
+						style="width:350px" symbolPosition="p" required="true"
+						validatorMessage="Por favor, insira o nome completo.">
+					</p:inputText>
+				</h:panelGrid>
+				<p:commandButton id="botaoAlterarNomeProfissional"
+					style="width: 350px;"
+					action="#{profissionalController.alterarProfissional}"
+					value="Salvar" update=":formProfissional"
+					oncomplete="PF('dlgAlterarProfissional').hide();"
+					icon="fa fa-money" />
+			</h:form>
+
+		</p:dialog>
+
+		<p:confirmDialog global="true">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>

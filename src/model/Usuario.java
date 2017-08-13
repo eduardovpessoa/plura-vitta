@@ -20,17 +20,18 @@ public class Usuario {
 	private long id;
 
 	private String email;
+	private String nome;
 	private String senha;
 	private char tipo;
-	
+
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date cadastro;
-	
+
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date nascimento;
-	
+
 	private boolean status;
 
 	public long getId() {
@@ -47,6 +48,14 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getSenha() {

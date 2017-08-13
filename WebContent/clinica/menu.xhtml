@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formMenu">
+		<p:menubar>
+			<p:submenu label=" Profissionais" icon="ui-icon-home">
+				<p:menuitem outcome="/clinica/orcamento.xhtml">Pesquisar profissionais</p:menuitem>
+			</p:submenu>
+			<p:submenu label=" Locais" icon="ui-icon-home">
+				<p:menuitem outcome="/clinica/pesquisarLocais.xhtml">Pesquisar locais</p:menuitem>
+			</p:submenu>
+			<p:submenu label=" Perfil" icon="fa fa-user">
+				<p:menuitem outcome="/clinica/dadosUsuario.xhtml">Alterar dados</p:menuitem>
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+</ui:composition>

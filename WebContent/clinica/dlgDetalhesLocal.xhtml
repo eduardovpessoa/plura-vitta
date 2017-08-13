@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:form id="formDetalhesLocal">
+
+		<h:graphicImage library="imagens" name="addLocal.png"
+			style="vertical-align: middle; width: 63px; " alt="usuarioIcon" />
+		<p:outputLabel value="Detalhes local"
+			style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
+		<br />
+		<p:separator />
+
+		<p:messages id="messagesDetalhes" showDetail="false" />
+
+		<h:panelGrid columns="2" cellpadding="5" width="100%">
+			<p:outputLabel for="nomeLocal" value="Nome:" />
+			<p:outputLabel for="tipoLocal" value="Tipo:" />
+
+			<p:inputText id="nomeLocal"
+				value="#{localController.localSelecionado.nome}" />
+			<p:selectOneMenu id="tipoLocal" converter="tipoLocalConverter"
+				required="true" value="#{localController.localSelecionado.tipo}">
+				<f:selectItem itemLabel="Selecione o tipo Local" itemValue="" />
+				<f:selectItems value="#{localController.listaTipoLocais}" var="item"
+					itemLabel="#{item.descricao}" itemValue="#{item}" />
+			</p:selectOneMenu>
+		</h:panelGrid>
+
+		<h:panelGrid columns="1" cellpadding="5" height="100%">
+			<p:outputLabel for="cidade" value="Cidade:" />
+			<p:autoComplete id="cidade" minQueryLength="3"
+				value="#{localController.localSelecionado.cidade}"
+				forceSelection="true" var="cidade" maxResults="10"
+				converter="cidadeConverter" itemLabel="#{cidade.nome}"
+				itemValue="#{cidade}"
+				completeMethod="#{localController.listaCidadesComplete}"
+				effect="fade" />
+
+			<p:outputLabel for="descricaoLocal" value="Descricao:" />
+			<p:inputTextarea id="descricaoLocal" cols="100" style="width:100%"
+				value="#{localController.localSelecionado.descricao}" />
+		</h:panelGrid>
+
+		<p:separator />
+
+		<p:carousel id="panelFotos"
+			rendered="#{localController.localSelecionado.idLocal!= null}"
+			autoPlayInterval="5000"
+			value="#{localController.localSelecionado.fotos}" var="imagem"
+			headerText="Fotos" style="width:100%" responsive="true">			   
+			  #{imagem.nome} 
+			  <br />
+			<p:graphicImage value="#{fotosController.image}" height="100px"
+				cache="false">
+				<f:param name="id" value="#{imagem.idFoto}" />
+			</p:graphicImage>
+		</p:carousel>
+
+		<p:separator />
+
+		<p:fileUpload
+			rendered="#{localController.localSelecionado.idLocal!= null}"
+			fileUploadListener="#{localController.handleFileUpload}"
+			mode="advanced" dragDropSupport="false" update="panelFotos"
+			sizeLimit="100000" fileLimit="3"
+			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+		<br />
+		<br />
+
+		<p:commandButton id="button" style="width: 100%;"
+			action="#{localController.salvarLocal}" value="Salvar local"
+			update="formDetalhesLocal" icon="fa fa-save" />
+	</h:form>
+
+</ui:composition>

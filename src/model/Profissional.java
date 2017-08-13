@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "profissional", schema = "public")
@@ -17,15 +22,18 @@ public class Profissional {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "empresa")
-	private Empresa empresa;
+	/*
+	 * @ManyToOne(fetch = FetchType.LAZY, optional = true)
+	 * 
+	 * @JoinColumn(name = "idLocal") private Local local;
+	 */
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario")
-	private Usuario usuario;
-	
+	@Column(name = "nome")
 	private String nome;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dataCadastro")
+	private Date dataCadastro;
 
 	public long getId() {
 		return id;
@@ -35,28 +43,20 @@ public class Profissional {
 		this.id = id;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 }

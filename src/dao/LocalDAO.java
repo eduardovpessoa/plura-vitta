@@ -6,22 +6,23 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import model.Cidade;
+import model.Foto;
+import model.Local;
 import util.Connection;
 
-public class CidadeDAO {
+public class LocalDAO {
 
 	Connection conexao = new Connection();
 
 	@SuppressWarnings("unchecked")
-	public List<Cidade> listarCidadeByNome(String paramPesquisa) {
-		List<Cidade> listaResultado = new ArrayList<Cidade>();
+	public List<Local> listarLocaisByNome(String paramPesquisa) {
+		List<Local> listaResultado = new ArrayList<Local>();
 
 		EntityManager em = conexao.getConexao();
 
 		em.getTransaction().begin();
 
-		Query query = em.createQuery("SELECT l FROM Cidade l where l.nome like :paramPesquisa");
+		Query query = em.createQuery("SELECT l FROM Local l where l.nome like :paramPesquisa");
 		query.setParameter("paramPesquisa", "%" + paramPesquisa + "%");
 		listaResultado.addAll(query.getResultList());
 
@@ -32,20 +33,32 @@ public class CidadeDAO {
 		return listaResultado;
 	}
 
-	public Cidade buscarCidadeById(Integer idCidade) {
-
-		Cidade cidade;
-
+	public Local salvarLocal(Local local) {
 		EntityManager em = conexao.getConexao();
 
 		em.getTransaction().begin();
 
-		cidade = em.find(Cidade.class, idCidade);
+		em.merge(local);
 
 		em.getTransaction().commit();
 
 		em.close();
 
-		return cidade;
+		return local;
 	}
+
+	public Foto inserirFoto(Foto novaFoto) {
+		EntityManager em = conexao.getConexao();
+
+		em.getTransaction().begin();
+
+		novaFoto = em.merge(novaFoto);
+
+		em.getTransaction().commit();
+
+		em.close();
+
+		return novaFoto;
+	}
+
 }

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formPesquisarLocais">
+			<p:panel style="height:100%">
+				<p:panel style="height:100%">
+					<h:graphicImage library="imagens" name="locais.png"
+						style="vertical-align: middle; width: 63px;" alt="locaisIcon" />
+					<p:outputLabel value="Pesquisar locais"
+						style="font-size: 250%; vertical-align: middle;"></p:outputLabel>
+					<br />
+
+					<p:separator />
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="idPesquisaLocais" value="Pesquisar locais:"></p:outputLabel>
+						<p:outputLabel for="tipoLocalId" value="Tipo local:"></p:outputLabel>
+
+						<p:inputText id="idPesquisaLocais" size="50"
+							value="#{localController.paramPesquisa}" />
+						<p:selectOneMenu id="tipoLocalId" converter="tipoLocalConverter"
+							value="#{localController.tipoLocalOneMenu}">
+							<f:selectItem itemLabel="Selecione o tipo Local" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{localController.listaTipoLocais}"
+								var="item" itemLabel="#{item.descricao}" itemValue="#{item}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<br />
+					<p:commandButton id="pesquisarLocais"
+						style="width: 200px; float:right;"
+						action="#{localController.pesquisarLocais}"
+						update="formPesquisarLocais" value="Pesquisar" icon="fa fa-search" />
+
+					<p:commandButton id="botaoAdicionarLocal"
+						style="width: 200px; float:right;"
+						action="#{localController.novoLocal}"
+						oncomplete="PF('dlgDetalhesLocal').show();"
+						update=":formDetalhesLocal" value="Adicionar local"
+						icon="fa fa-plus-square-o" />
+					<p:spacer height="30px"></p:spacer>
+
+					<p:messages id="messages" showDetail="false" />
+
+				</p:panel>
+				<p:spacer height="30px"></p:spacer>
+				<p:dataTable id="idLocalDataTable" var="local"
+					value="#{localController.listaLocais}" paginator="true"
+					rowsPerPageTemplate="5,10,15"
+					emptyMessage="Não foi encontrado nenhum local.">
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{local.nome}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Descricao">
+						<h:outputText value="#{local.descricao}">
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Alterar" style="width:10%">
+						<p:commandButton id="botaoAlterar" update=":formDetalhesLocal"
+							onclick="PF('dlgDetalhesLocal').show();" style="width:80px"
+							icon="fa fa-search">
+							<f:setPropertyActionListener value="#{local}"
+								target="#{localController.localSelecionado}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Local" resizable="false"
+			widgetVar="dlgDetalhesLocal" modal="true" height="600" width="800">
+			<ui:include src="/clinica/dlgDetalhesLocal.xhtml">
+			</ui:include>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
